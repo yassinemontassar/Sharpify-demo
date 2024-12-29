@@ -220,7 +220,7 @@ export default function ImageProcessor() {
       </div>
       <a
         href={image}
-        download={`processed-image-${index + 1}.jpg`}
+        download={`processed-image-${index + 1}`}
         className="mt-1 bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 flex items-center justify-center"
       >
         <Download className="w-4 h-4" />
