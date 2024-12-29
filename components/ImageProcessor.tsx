@@ -37,6 +37,8 @@ export default function ImageProcessor() {
       size: 80,
       color: "white",
       opacity: 0.8,
+      background: true,
+      padding: 20,
     },
     enhance: { brightness: 1.2, contrast: 1.1, saturation: 1.3 },
     blur: { amount: 5 },
