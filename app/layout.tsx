@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://sharpify.yourdomain.com'),
+  metadataBase: new URL('https://sharpify-demo.vercel.app/'),
   title: {
     default: "Sharpify - High Performance Image Processing for Node.js",
     template: "%s | Sharpify"
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://sharpify.yourdomain.com",
+    url: "https://sharpify-demo.vercel.app/",
     siteName: "Sharpify",
     title: "Sharpify - High Performance Image Processing for Node.js",
     description: "Transform and optimize your images at scale with Sharpify, the powerful Node.js image processing library.",
@@ -72,9 +72,9 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://sharpify.yourdomain.com",
+    canonical: "https://sharpify-demo.vercel.app/",
     types: {
-      "application/json+ld": "https://sharpify.yourdomain.com/json-ld",
+      "application/json+ld": "https://sharpify-demo.vercel.app//json-ld",
     },
   },
   manifest: "/manifest.json",
@@ -120,7 +120,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        <link rel="canonical" href="https://sharpify.yourdomain.com" />
+        <link rel="canonical" href="https://sharpify-demo.vercel.app/" />
         <meta name="theme-color" content="#4F46E5" />
         <script
           type="application/ld+json"
