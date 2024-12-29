@@ -44,14 +44,11 @@ export async function processImage(formData: FormData) {
           quality: params.format.quality,
         });
         break;
-        case "watermark":
-          processedImage = await Sharpify.process(processedImage.data, {
-            watermark: {
-              ...params.watermark,
-                 font: 'Geist, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-            }
-          });
-          break;
+      case "watermark":
+        processedImage = await Sharpify.process(processedImage.data, {
+          watermark: params.watermark,
+        });
+        break;
       case "enhance":
         processedImage = await Sharpify.process(processedImage.data, {
           brightness: params.enhance.brightness,
