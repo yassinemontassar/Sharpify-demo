@@ -38,7 +38,6 @@ export default function ImageProcessor() {
       color: "white",
       opacity: 0.8,
       background: true,
-      padding: 20,
     },
     enhance: { brightness: 1.2, contrast: 1.1, saturation: 1.3 },
     blur: { amount: 5 },
@@ -70,17 +69,10 @@ export default function ImageProcessor() {
 
     setIsProcessing(true);
     try {
-      // Encode the watermark text properly
-      const modifiedParams = {
-        ...operationParams,
-        watermark: operations.includes('watermark') ? {
-          ...operationParams.watermark,
-          text: encodeURIComponent(operationParams.watermark.text) // Encode the text
-        } : operationParams.watermark
-      };
-
       if (isBatchProcessing) {
         const formData = new FormData();
+
+        // Convert data URLs to Blobs and append to FormData
         await Promise.all(
           images.map(async (imageDataUrl, index) => {
             const response = await fetch(imageDataUrl);
@@ -90,7 +82,7 @@ export default function ImageProcessor() {
         );
 
         operations.forEach((op) => formData.append("operations", op));
-        formData.append("params", JSON.stringify(modifiedParams));
+        formData.append("params", JSON.stringify(operationParams));
 
         const result = await batchProcessImages(formData);
         setProcessedImages(result.images);
@@ -102,7 +94,7 @@ export default function ImageProcessor() {
         const blob = await response.blob();
         formData.append("image", blob, "image.jpg");
         operations.forEach((op) => formData.append("operations", op));
-        formData.append("params", JSON.stringify(modifiedParams));
+        formData.append("params", JSON.stringify(operationParams));
 
         const result = await processImage(formData);
         setProcessedImages([result.image]);
@@ -111,8 +103,7 @@ export default function ImageProcessor() {
       }
     } catch (error) {
       console.error("Error processing images:", error);
-      // Add error UI feedback here
-      alert(`Error processing image: ${error}`);
+      // You might want to add error handling UI here
     } finally {
       setIsProcessing(false);
     }
