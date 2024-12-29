@@ -191,7 +191,7 @@ export default function ImageProcessor() {
               <CardContent className="p-6">
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {images.map((image, index) => (
-                    <div key={index} className="relative w-full h-[400px]">
+                    <div key={index} className="relative w-full h-[200px]">
                       <Image
                         src={image}
                         alt={`Original ${index + 1}`}
@@ -209,7 +209,7 @@ export default function ImageProcessor() {
               <CardContent className="p-6">
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {processedImages.map((image, index) => (
-                    <div key={index} className="relative w-full h-[400px]">
+                    <div key={index} className="relative w-full h-[200px]">
                       <Image
                         src={image}
                         alt={`Processed ${index + 1}`}
