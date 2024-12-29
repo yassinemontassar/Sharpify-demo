@@ -34,7 +34,7 @@ export default function ImageProcessor() {
     watermark: {
       text: "© 2024 Sharpify",
       position: "bottom-right",
-      font: "Arial",
+      font: "Geist Sans",
       size: 80,
       color: "white",
       opacity: 0.8,
