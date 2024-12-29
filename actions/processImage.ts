@@ -1,6 +1,6 @@
 "use server";
 
-import { ImageStats, ProcessedImage, Sharpify, WatermarkFont } from "sharpify";
+import { ImageStats, ProcessedImage, Sharpify } from "sharpify";
 
 export async function processImage(formData: FormData) {
   const file = formData.get("image") as File;
@@ -48,7 +48,7 @@ export async function processImage(formData: FormData) {
           processedImage = await Sharpify.process(processedImage.data, {
             watermark: {
               ...params.watermark,
-              font: 'Arial' as WatermarkFont 
+                 font: 'Geist, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
             }
           });
           break;
