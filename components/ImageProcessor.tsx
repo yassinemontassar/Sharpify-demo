@@ -36,6 +36,7 @@ export default function ImageProcessor() {
       position: "bottom-right",
       size: 80,
       color: "white",
+      font: "Arial",
       opacity: 0.8,
     },
     enhance: { brightness: 1.2, contrast: 1.1, saturation: 1.3 },

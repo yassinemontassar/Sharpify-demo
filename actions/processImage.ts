@@ -1,6 +1,6 @@
 "use server";
 
-import { ImageStats, ProcessedImage, Sharpify } from "sharpify";
+import { ImageStats, ProcessedImage, Sharpify, WatermarkFont } from "sharpify";
 
 export async function processImage(formData: FormData) {
   const file = formData.get("image") as File;
@@ -44,11 +44,14 @@ export async function processImage(formData: FormData) {
           quality: params.format.quality,
         });
         break;
-      case "watermark":
-        processedImage = await Sharpify.process(processedImage.data, {
-          watermark: params.watermark,
-        });
-        break;
+        case "watermark":
+          processedImage = await Sharpify.process(processedImage.data, {
+            watermark: {
+              ...params.watermark,
+              font: 'Arial' as WatermarkFont 
+            }
+          });
+          break;
       case "enhance":
         processedImage = await Sharpify.process(processedImage.data, {
           brightness: params.enhance.brightness,
