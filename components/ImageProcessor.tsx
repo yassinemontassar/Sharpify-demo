@@ -1,5 +1,4 @@
 "use client";
-
 import { batchProcessImages, processImage } from "@/actions/processImage";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -28,13 +27,12 @@ export default function ImageProcessor() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [isBatchProcessing, setIsBatchProcessing] = useState(false);
   const [operationParams, setOperationParams] = useState({
-    resize: { width: 800, height: 600 },
+    resize: { width: 800, height: 600 }, // Default resize values removed
     crop: { left: 0, top: 0, width: 500, height: 500 },
     rotate: { angle: 90 },
     watermark: {
       text: "© 2024 Sharpify",
       position: "bottom-right",
-      font: "Geist Sans",
       size: 80,
       color: "white",
       opacity: 0.8,
@@ -42,8 +40,9 @@ export default function ImageProcessor() {
       padding: 10,
     },
     enhance: { brightness: 1.2, contrast: 1.1, saturation: 1.3 },
-    blur: { amount: 5 },
+    blur: { amount: 5 }, // Default blur value removed
     format: { type: "webp", quality: 80 },
+    avatar: { size: 400 },
   });
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,7 +73,6 @@ export default function ImageProcessor() {
       if (isBatchProcessing) {
         const formData = new FormData();
 
-        // Convert data URLs to Blobs and append to FormData
         await Promise.all(
           images.map(async (imageDataUrl, index) => {
             const response = await fetch(imageDataUrl);
@@ -105,7 +103,6 @@ export default function ImageProcessor() {
       }
     } catch (error) {
       console.error("Error processing images:", error);
-      // You might want to add error handling UI here
     } finally {
       setIsProcessing(false);
     }
@@ -192,15 +189,19 @@ export default function ImageProcessor() {
           <TabsContent value="original">
             <Card>
               <CardContent className="p-6">
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   {images.map((image, index) => (
-                    <div key={index} className="relative w-full h-[200px]">
-                      <Image
-                        src={image}
-                        alt={`Original ${index + 1}`}
-                        fill
-                        style={{ objectFit: "contain" }} 
-                      />
+                    <div
+                      key={index}
+                      className="flex justify-center items-center">
+                      <div className="relative w-full h-[200px]">
+                        <Image
+                          src={image}
+                          alt={`Original ${index + 1}`}
+                          fill
+                          style={{ objectFit: "contain" }}
+                        />
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -208,33 +209,31 @@ export default function ImageProcessor() {
             </Card>
           </TabsContent>
           <TabsContent value="processed">
-  <Card>
-    <CardContent className="p-6">
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-  {processedImages.map((image, index) => (
-    <div key={index} className="flex flex-col items-center">
-      <div className="relative w-full h-[200px]">
-        <Image
-          src={image}
-          alt={`Processed ${index + 1}`}
-          fill
-          style={{ objectFit: "contain" }}
-        />
-      </div>
-      <a
-        href={image}
-        download={`processed-image-${index + 1}`}
-        className="mt-1 bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 flex items-center justify-center"
-      >
-        <Download className="w-4 h-4" />
-      </a>
-    </div>
-  ))}
-</div>
-
-    </CardContent>
-  </Card>
-</TabsContent>
+            <Card>
+              <CardContent className="p-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                  {processedImages.map((image, index) => (
+                    <div key={index} className="flex flex-col items-center">
+                      <div className="relative w-full h-[200px]">
+                        <Image
+                          src={image}
+                          alt={`Processed ${index + 1}`}
+                          fill
+                          style={{ objectFit: "contain" }}
+                        />
+                      </div>
+                      <a
+                        href={image}
+                        download={`processed-image-${index + 1}`}
+                        className="mt-1 bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 flex items-center justify-center">
+                        <Download className="w-4 h-4" />
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
         </Tabs>
       )}
 
@@ -264,6 +263,7 @@ export default function ImageProcessor() {
                 "blur",
                 "flip",
                 "flop",
+                "avatar",
               ].map((op) => (
                 <div key={op} className="flex items-center space-x-2">
                   <Checkbox
@@ -587,6 +587,24 @@ export default function ImageProcessor() {
                       "blur",
                       "amount",
                       parseFloat(e.target.value)
+                    )
+                  }
+                />
+              </div>
+            )}
+            {operations.includes("avatar") && (
+              <div>
+                <Label htmlFor="avatar-size">Avatar Size</Label>
+                <Input
+                  id="avatar-size"
+                  type="number"
+                  min="100"
+                  value={operationParams.avatar.size}
+                  onChange={(e) =>
+                    updateOperationParam(
+                      "avatar",
+                      "size",
+                      parseInt(e.target.value)
                     )
                   }
                 />

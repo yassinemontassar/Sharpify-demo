@@ -113,27 +113,25 @@ const jsonLd = {
 };
 
 export default function RootLayout({
+  children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-    return (
-      <html lang="en" className="scroll-smooth">
-        <head>
-          <link rel="canonical" href="https://sharpify-demo.vercel.app/" />
-          <meta name="theme-color" content="#4F46E5" />
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-          />
-        </head>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex items-center justify-center`}
-        >
-          <div className="text-center">
-            <h1 className="text-4xl font-bold mb-4">Under Development</h1>
-            <p className="text-lg">We&apos;re working hard to bring you the best experience. Stay tuned!</p>
-          </div>
-        </body>
-      </html>
-    );
+  return (
+    <html lang="en" className="scroll-smooth">
+      <head>
+        <link rel="canonical" href="https://sharpify-demo.vercel.app/" />
+        <meta name="theme-color" content="#4F46E5" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
+      >
+        {children}
+      </body>
+    </html>
+  );
 }

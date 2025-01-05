@@ -72,6 +72,10 @@ export async function processImage(formData: FormData) {
           flop: true,
         });
         break;
+      case "avatar": 
+        processedImage = await Sharpify.createAvatar(processedImage.data, {
+          size: params.avatar.size,
+        });
     }
   }
 
@@ -95,7 +99,6 @@ export async function batchProcessImages(formData: FormData) {
 
   const operations = formData.getAll("operations") as string[];
   const params = JSON.parse(formData.get("params") as string);
-
   // Convert Blobs to Buffers
   const buffers = await Promise.all(
     files.map(async (file) => {
@@ -104,16 +107,38 @@ export async function batchProcessImages(formData: FormData) {
     })
   );
 
-  const processedImages = await Sharpify.batchProcess(buffers, {
-    ...params.resize,
+  const batchProcessingOptions = {
     ...params.format,
-    watermark: params.watermark,
-    enhance: params.enhance,
-    blur: params.blur.amount,
-    grayscale: operations.includes("grayscale"),
-    flip: operations.includes("flip"),
-    flop: operations.includes("flop"),
-  });
+  
+  };
+
+  if (operations.includes("watermark")) {
+    batchProcessingOptions.watermark = params.watermark;
+  }
+
+  if (operations.includes("resize")) {
+    batchProcessingOptions.resize = params.resize;
+  }
+
+  if (operations.includes("flip")) {
+    batchProcessingOptions.flip = params.flip;
+  }
+  
+  if (operations.includes("enhance")) {
+    batchProcessingOptions.enhance = params.enhance;
+  }
+
+  if (operations.includes("blur")) {
+    batchProcessingOptions.blur = params.blur.amount;
+  }
+  
+  if (operations.includes("crop")) {
+    batchProcessingOptions.crop = params.crop;
+  }
+
+
+console.log(batchProcessingOptions)
+  const processedImages = await Sharpify.batchProcess(buffers, batchProcessingOptions);
 
   const stats = await Promise.all(
     processedImages.map((img) => Sharpify.getStats(img.data))
