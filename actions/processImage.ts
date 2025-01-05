@@ -49,7 +49,7 @@ export async function processImage(formData: FormData) {
         processedImage = await Sharpify.process(processedImage.data, {
           watermark: {
             ...params.watermark,
-            font: 'Arial, Helvetica, sans-serif', // Updated font stack
+            font: 'font-sans', // Updated font stack
           },
         });
         break;
