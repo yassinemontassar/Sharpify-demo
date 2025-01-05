@@ -47,7 +47,10 @@ export async function processImage(formData: FormData) {
       case "watermark":
         console.log('Watermark parameters:', params.watermark);
         processedImage = await Sharpify.process(processedImage.data, {
-          watermark: params.watermark,
+          watermark: {
+            ...params.watermark,
+            font: 'Arial, Helvetica, sans-serif', // Updated font stack
+          },
         });
         break;
       case "enhance":

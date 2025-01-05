@@ -34,7 +34,7 @@ export default function ImageProcessor() {
       text: "© 2024 Sharpify",
       position: "bottom-right",
       size: 80,
-      font: "Arial",
+      font: "Arial, Helvetica, sans-serif",
       color: "white",
       opacity: 0.8,
     },
