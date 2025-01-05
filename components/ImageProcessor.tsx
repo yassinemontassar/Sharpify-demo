@@ -34,10 +34,9 @@ export default function ImageProcessor() {
       text: "© 2024 Sharpify",
       position: "bottom-right",
       size: 80,
+      font: "Arial",
       color: "white",
       opacity: 0.8,
-      background: true,
-      padding: 10,
     },
     enhance: { brightness: 1.2, contrast: 1.1, saturation: 1.3 },
     blur: { amount: 5 }, // Default blur value removed
